@@ -1,8 +1,12 @@
-name: pub_transformer_test
-description: A sample web application
+name: script_inliner
+description: A transformer to inline script content during a build.
+version: 0.0.1
+author: Seth Ladd <sethladd@gmail.com>
 dependencies:
   barback: any
-  browser: any
   html5lib: any
+  code_transformers: any
+dev_dependencies:
+  browser: any
 transformers:
-- pub_transformer_test
+- script_inliner

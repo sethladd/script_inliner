@@ -1,8 +1,7 @@
-import 'package:barback/barback.dart';
-import 'dart:async';
+import 'package:barback/barback.dart' show Asset, Transform, Transformer;
+import 'dart:async' show Future;
 import 'package:html5lib/parser.dart' show parse;
-import 'dart:io';
-//import 'package:html5lib/dom.dart';
+import 'package:code_transformers/assets.dart' show uriToAssetId;
 
 class ScriptInliningTransformer extends Transformer {
   ScriptInliningTransformer.asPlugin();
@@ -16,14 +15,19 @@ class ScriptInliningTransformer extends Transformer {
 
       // attribute selectors don't work yet, do it manually
       var processing = document.querySelectorAll('script').where((tag) {
-        return tag.attributes['data-pub-inline'] != null && tag.attributes['src'] != null;
+        return tag.attributes['data-pub-inline'] != null &&
+               tag.attributes['src'] != null;
       }).map((tag) {
         var src = tag.attributes['src'];
-        return new File(src).readAsString().then((source) {
+        var srcAssetId = uriToAssetId(id, src, transform.logger, tag.sourceSpan);
+
+        return transform.readInputAsString(srcAssetId).then((source) {
+        //return new File(src).readAsString().then((source) {
           tag.text = source;
           tag.attributes.remove('src');
-        }).catchError((e) => print("ERROR: reading $src, error: $e"));
-                             // TODO: what's the right way to log?
+          tag.attributes['data-pub-inline'] = src;
+        }).catchError((e) => transform.logger.error(
+            "ERROR: reading $src, error: $e", asset: id));
       });
 
       return Future.wait(processing).then((_) {
