@@ -1,0 +1,8 @@
+name: pub_transformer_test
+description: A sample web application
+dependencies:
+  barback: any
+  browser: any
+  html5lib: any
+transformers:
+- pub_transformer_test
