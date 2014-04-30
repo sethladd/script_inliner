@@ -1,13 +1,13 @@
+library script_inliner;
+
 import 'package:barback/barback.dart' show Asset, Transform, Transformer;
 import 'dart:async' show Future;
 import 'package:html5lib/parser.dart' show parse;
 import 'package:code_transformers/assets.dart' show uriToAssetId;
 
-/**
- * Finds script tags that have data-pub-inline attributes, and inlines
- * the contents. The src attribute URL must be reachable by pub's build
- * system.
- */
+/// Finds script tags that have data-pub-inline attributes, and inlines
+/// the contents. The src attribute URL must be reachable by pub's build
+/// system.
 class ScriptInliningTransformer extends Transformer {
   ScriptInliningTransformer.asPlugin();
 
@@ -30,8 +30,7 @@ class ScriptInliningTransformer extends Transformer {
           tag.text = source;
           tag.attributes.remove('src');
           tag.attributes['data-pub-inline'] = src;
-        }).catchError((e) => transform.logger.error(
-            "ERROR: reading $src, error: $e", asset: id));
+        });
       });
 
       return Future.wait(processing).then((_) {

@@ -13,6 +13,23 @@ the browser.
 The browser must fetch dart.js before it can fetch the application logic.
 This causes unnecessary startup delay for your users.
 
+## Prereq
+
+To get the most benefit from this transformer, you should put the
+script tags before the CSS link tag. Browsers can pause script
+execution until CSS files are loaded, unless the script tag
+is before the CSS tag.
+
+Before you begin, ensure the `<head>` looks something like this:
+
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>My App</title>
+      <script async type="application/dart" src="test.dart"></script>
+      <script async src="packages/browser/dart.js"></script>
+    </head>
+
 ## How it works
 
 This small transformer inlines script contents, ensuring the dart.js file
@@ -30,9 +47,9 @@ Add the transformer to your pubspec.yaml:
 
 ## Usage
 
-Add a `data-pub-inline` attribute to the script tag.
+Add a `data-pub-inline` attribute to the script tag. Here is an example:
 
-    <script data-pub-inline src="packages/browser/dart.js"></script>
+    <script async data-pub-inline src="packages/browser/dart.js"></script>
     
 Run `pub build` to build the application, or `pub serve` to run a development
 server. In both cases, `pub` will inline the dart.js file:

@@ -1,6 +1,6 @@
 name: script_inliner
 description: A transformer to inline script content during a build.
-version: 0.0.1
+version: 0.0.2
 author: Seth Ladd <sethladd@gmail.com>
 homepage: https://github.com/sethladd/script_inliner
 dependencies:
