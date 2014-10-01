@@ -1,3 +1,7 @@
+# 0.0.3
+
+* Bump backback dep to 0.15
+
 # 0.0.2
 
 * Respond to code review.
