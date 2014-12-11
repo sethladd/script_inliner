@@ -1,3 +1,7 @@
+# 1.0.0
+
+* Formally bumping this package to 1.0.
+
 # 0.0.3
 
 * Bump backback dep to 0.15
